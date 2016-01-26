@@ -1,4 +1,4 @@
-# moodle-block_sidebar
+# Sidebar Block for Moodle
 It functions by associating a course section with a sidebar block instance. This is done by mirroring the contents of an “orphaned” section. Here’s an example:
 
 - Let’s assume that a course has 10 sections
