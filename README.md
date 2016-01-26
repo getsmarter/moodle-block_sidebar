@@ -13,4 +13,4 @@ All resources and activities within a block can be edited and moved around just 
 
 In a sense, this block combined the main menu block functions and HTML block functions into a single block that can be used in a course
 
-Loation on Moodle Plugin Repository: https://moodle.org/plugins/block_side_bar 
+Location on Moodle Plugin Repository: https://moodle.org/plugins/block_side_bar 
