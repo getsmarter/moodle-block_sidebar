@@ -71,6 +71,7 @@ class restore_side_bar_block_task extends restore_block_task {
 
         // Get the blockid.
         $blockid = $this->get_blockid();
+
         if ($configdata = $DB->get_field('block_instances', 'configdata', array('id' => $blockid))) {
             $config = unserialize(base64_decode($configdata));
             if (!empty($config->section_id)) {
@@ -84,6 +85,17 @@ class restore_side_bar_block_task extends restore_block_task {
                     // Encode and save the config.
                     $configdata = base64_encode(serialize($config));
                     $DB->set_field('block_instances', 'configdata', $configdata, array('id' => $blockid));
+
+                    $newsection = $DB->get_record('course_sections', array('id' => $mapping->newitemid));
+
+                    // Update the Side Bar section with the required values to make it work
+                    $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$newsection->course);
+                    $newsection->name          = get_string('sidebar', 'block_side_bar');
+                    $newsection->summary       = get_string('sectionsummary', 'block_side_bar', (string)html_writer::link($reseturl, $reseturl));
+                    $newsection->summaryformat = FORMAT_HTML;
+                    $newsection->visible       = true;
+                    $DB->update_record('course_sections', $newsection);
+
                 }
             }
         }
