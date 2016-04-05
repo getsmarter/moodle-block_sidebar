@@ -16,16 +16,16 @@
 
 /**
  * Define all the backup steps that will be used by the backup_block_task
- * @package    block_activity_results
+ * @package    block_side_bar
  * @copyright  2003 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
- * @copyright  2015 Stephen Bourget
+ * @copyright  2016 Nelson Moller
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Specialised restore task for the activity_results block
+ * Specialised restore task for the side bar block
  * (using execute_after_tasks for recoding of target activity)
  *
  * @copyright  2003 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
@@ -63,8 +63,8 @@ class restore_side_bar_block_task extends restore_block_task {
      * This function, executed after all the tasks in the plan
      * have been executed, will perform the recode of the
      * target activity for the block. This must be done here
-     * and not in normal execution steps because the activity
-     * can be restored after the block.
+     * and not in normal execution so we are sure everything is
+     * at its finale place.
      */
     public function after_restore() {
         global $DB;
@@ -86,6 +86,7 @@ class restore_side_bar_block_task extends restore_block_task {
                     $configdata = base64_encode(serialize($config));
                     $DB->set_field('block_instances', 'configdata', $configdata, array('id' => $blockid));
 
+                    // Arrange the replace link in the course_sections summary
                     $newsection = $DB->get_record('course_sections', array('id' => $mapping->newitemid));
 
                     // Update the Side Bar section with the required values to make it work
