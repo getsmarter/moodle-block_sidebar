@@ -17,7 +17,7 @@
 /**
  * Version details
  *
- * @package    block_side_bar
+ * @package    block_ned_sidebar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -26,8 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016010701;
+$plugin->version   = 2016042100;
 $plugin->requires  = 2014051200;
 $plugin->release   = '2.7.1';
-$plugin->component = 'block_side_bar';
+$plugin->component = 'block_ned_sidebar';
 $plugin->maturity  = MATURITY_STABLE;

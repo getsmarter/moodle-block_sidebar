@@ -17,7 +17,7 @@
 /**
  * Will reset the sidebar block course sections within the given course.
  *
- * @package    block_side_bar
+ * @package    block_ned_sidebar
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2013 onwards Justin Filip
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -35,8 +35,9 @@ $context = context_course::instance($course->id);
 
 require_capability('moodle/course:manageactivities', $context);
 
-// Fetch all block instances which have saved configuration data
-$select = "parentcontextid = :ctxid AND blockname = 'side_bar' AND ".$DB->sql_isnotempty('block_instances', 'configdata', true, true);
+// Fetch all block instances which have saved configuration data.
+$select = "parentcontextid = :ctxid AND blockname = 'ned_sidebar' AND ".
+    $DB->sql_isnotempty('block_instances', 'configdata', true, true);
 if ($bis = $DB->get_recordset_select('block_instances', $select, array('ctxid' => $context->id), 'id, configdata')) {
     foreach ($bis as $bi) {
         $blockcfg = unserialize(base64_decode($bi->configdata));
@@ -49,15 +50,15 @@ if ($bis = $DB->get_recordset_select('block_instances', $select, array('ctxid' =
             continue;
         }
 
-        $sectioninfo = block_side_bar_move_section($course, (int)$section->section);
+        $sectioninfo = block_ned_sidebar_move_section($course, (int)$section->section);
 
         if ($sectioninfo != null) {
-            // Store the new section number and update the block configuration data
+            // Store the new section number and update the block configuration data.
             $blockcfg->section = $sectioninfo->section;
             $DB->set_field('block_instances', 'configdata', base64_encode(serialize($blockcfg)), array('id' => $bi->id));
         }
     }
 }
 
-// We're done, so head back to the course
+// We're done, so head back to the course.
 redirect(new moodle_url('/course/view.php?id='.$course->id));

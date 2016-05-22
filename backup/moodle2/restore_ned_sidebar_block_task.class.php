@@ -16,7 +16,7 @@
 
 /**
  * Define all the backup steps that will be used by the backup_block_task
- * @package    block_side_bar
+ * @package    block_ned_sidebar
  * @copyright  2003 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @copyright  2016 Nelson Moller
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  2003 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class restore_side_bar_block_task extends restore_block_task {
+class restore_ned_sidebar_block_task extends restore_block_task {
 
     /**
      * Define (add) particular settings this activity can have
@@ -86,13 +86,15 @@ class restore_side_bar_block_task extends restore_block_task {
                     $configdata = base64_encode(serialize($config));
                     $DB->set_field('block_instances', 'configdata', $configdata, array('id' => $blockid));
 
-                    // Arrange the replace link in the course_sections summary
+                    // Arrange the replace link in the course_sections summary.
                     $newsection = $DB->get_record('course_sections', array('id' => $mapping->newitemid));
 
-                    // Update the Side Bar section with the required values to make it work
-                    $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$newsection->course);
-                    $newsection->name          = get_string('sidebar', 'block_side_bar');
-                    $newsection->summary       = get_string('sectionsummary', 'block_side_bar', (string)html_writer::link($reseturl, $reseturl));
+                    // Update the Side Bar section with the required values to make it work.
+                    $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$newsection->course);
+                    $newsection->name          = get_string('sidebar', 'block_ned_sidebar');
+                    $newsection->summary       = get_string('sectionsummary', 'block_ned_sidebar',
+                        (string)html_writer::link($reseturl, $reseturl)
+                    );
                     $newsection->summaryformat = FORMAT_HTML;
                     $newsection->visible       = true;
                     $DB->update_record('course_sections', $newsection);

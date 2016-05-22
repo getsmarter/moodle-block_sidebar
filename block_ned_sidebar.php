@@ -18,7 +18,7 @@
  * Allows for arbitrarily adding resources or activities to extra (non-standard) course sections with instance
  * configuration for the block title.
  *
- * @package    block_side_bar
+ * @package    block_ned_sidebar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -27,16 +27,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_side_bar extends block_list {
+class block_ned_sidebar extends block_list {
     /**
      * Setup the title for this block
      */
     public function init() {
-        $this->title = get_string('pluginname', 'block_side_bar');
+        $this->title = get_string('pluginname', 'block_ned_sidebar');
     }
 
     /**
-     * Parent class version of this function simply returns NULL This should be implemented by the derived class to return the content object.
+     * Parent class version of this function simply returns NULL This should be implemented by
+     * the derived class to return the content object.
      *
      * @return object The content object
      */
@@ -59,6 +60,16 @@ class block_side_bar extends block_list {
             return $this->content;
         }
 
+        $locationmethod = 'number';
+        if (isset($this->config->location_method)) {
+            $locationmethod = $this->config->location_method;
+        }
+
+        $sectionname = '';
+        if (isset($this->config->section_name)) {
+            $sectionname = $this->config->section_name;
+        }
+
         if (!isset($this->config->title)) {
             if (!isset($this->config)) {
                 $this->config = new stdClass();
@@ -71,10 +82,26 @@ class block_side_bar extends block_list {
         $context   = context_course::instance($course->id);
         $isediting = $this->page->user_is_editing() && has_capability('moodle/course:manageactivities', $context);
 
+        if (!empty($locationmethod && !empty($sectionname))) {
+            if ($locationmethod == 'name') {
+                if ($section = $DB->get_record('course_sections',
+                    array('course' => $course->id, 'name' => $sectionname))) {
+                    $this->config->section_id = $section->id;
+                } else {
+                    if (preg_match_all('/\d+/', $sectionname, $numbers)) {
+                        if ($section = $DB->get_record('course_sections',
+                            array('course' => $course->id, 'section' => end($numbers[0])))) {
+                            $this->config->section_id = $section->id;
+                        }
+                    }
+                }
+            }
+        }
+
         // Create a new section for this block (if necessary).
         if (empty($this->config->section_id)) {
-            require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
-            if (null == ($section = block_side_bar_create_section($course))) {
+            require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
+            if (null == ($section = block_ned_sidebar_create_section($course))) {
                 return $this->content;
             }
 
@@ -85,8 +112,8 @@ class block_side_bar extends block_list {
 
             $section = $DB->get_record('course_sections', array('id' => $this->config->section_id));
             if (empty($section)) {
-                require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
-                if (null == ($section = block_side_bar_create_section($course))) {
+                require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
+                if (null == ($section = block_ned_sidebar_create_section($course))) {
                     return $this->content;
                 }
 
@@ -96,7 +123,7 @@ class block_side_bar extends block_list {
 
         }
 
-        // extra fast view mode
+        // Extra fast view mode.
         $modinfo = get_fast_modinfo($course);
         if (!$isediting) {
             if (!empty($modinfo->sections[$section->section])) {
@@ -115,7 +142,7 @@ class block_side_bar extends block_list {
                         $this->content->icons[] = '';
                     } else {
                         $linkcss = $cm->visible ? '' : ' class="dimmed" ';
-                        // Accessibility: incidental image - should be empty Alt text
+                        // Accessibility: incidental image - should be empty Alt text.
                         $icon = '<img src="'.$cm->get_icon_url().'" class="icon" alt="" />&nbsp;';
                         $this->content->items[] = '<a title="'.$cm->modplural.'" '.$linkcss.' '.$cm->extra.' href="'.
                                 $url.'">'.$icon.$instancename.'</a>';
@@ -125,8 +152,12 @@ class block_side_bar extends block_list {
 
             return $this->content;
         }
+        // Editing on quick link btn.
+        $sectionurl = new moodle_url('/course/view.php',
+            array('id' => $course->id, 'section' => $section->section)
+        );
 
-        // slow & hacky editing mode
+        // Slow & hacky editing mode.
         $courserenderer = $this->page->get_renderer('core', 'course');
         $ismoving = ismoving($course->id);
 
@@ -146,13 +177,13 @@ class block_side_bar extends block_list {
         if ($ismoving) {
             $strmovehere = get_string('movehere');
             $strmovefull = strip_tags(get_string('movefull', '', "'$USER->activitycopyname'"));
-            $strcancel= get_string('cancel');
+            $strcancel = get_string('cancel');
             $stractivityclipboard = $USER->activitycopyname;
         } else {
             $strmove = get_string('move');
         }
 
-        // Casting $course->modinfo to string prevents one notice when the field is null
+        // Casting $course->modinfo to string prevents one notice when the field is null.
         $editbuttons = '';
 
         if ($ismoving) {
@@ -202,7 +233,7 @@ class block_side_bar extends block_list {
                         $this->content->items[] = $content.$editbuttons;
                         $this->content->icons[] = '';
                     } else {
-                        // Accessibility: incidental image - should be empty Alt text
+                        // Accessibility: incidental image - should be empty Alt text.
                         $icon = '<img src="'.$mod->get_icon_url().'" class="icon" alt="" />&nbsp;';
                         $this->content->items[] = '<a title="'.$mod->modfullname.'" '.$linkcss.' '.$mod->extra.
                                                   ' href="'.$url.'">'.$icon.$instancename.'</a>'.$editbuttons;
@@ -219,11 +250,22 @@ class block_side_bar extends block_list {
             $this->content->icons[] = '';
         }
 
+        $this->content->items[] = '<hr />';
+        $this->content->icons[] = '';
+
+        $this->content->items[] = '<div class="section-quick-link"><a class="btn" href="'.
+            $sectionurl->out().'">'.get_string('gotosection', 'block_ned_sidebar', $section->section).'</a></div>';
+        $this->content->icons[] = '';
+
         $this->content->footer = $courserenderer->course_section_add_cm_control($course, $section->section,
                 null, array('inblock' => true));
-        // Replace modchooser with dropdown
-        $this->content->footer = str_replace('hiddenifjs addresourcedropdown', 'visibleifjs addresourcedropdown', $this->content->footer);
-        $this->content->footer = str_replace('visibleifjs addresourcemodchooser', 'hiddenifjs addresourcemodchooser', $this->content->footer);
+        // Replace modchooser with dropdown.
+        $this->content->footer = str_replace(
+            'hiddenifjs addresourcedropdown', 'visibleifjs addresourcedropdown', $this->content->footer
+        );
+        $this->content->footer = str_replace(
+            'visibleifjs addresourcemodchooser', 'hiddenifjs addresourcemodchooser', $this->content->footer
+        );
 
         return $this->content;
     }
@@ -249,7 +291,8 @@ class block_side_bar extends block_list {
     }
 
     /**
-     * Are you going to allow multiple instances of each block? If yes, then it is assumed that the block WILL USE per-instance configuration.
+     * Are you going to allow multiple instances of each block? If yes, then it is assumed that the block
+     * WILL USE per-instance configuration.
      * @return bool
      */
     public function instance_allow_multiple() {
@@ -282,7 +325,7 @@ class block_side_bar extends block_list {
      */
     public function after_restore() {
         global $DB;
-        // Get the correct course_sections record ID for the new course
+        // Get the correct course_sections record ID for the new course.
         $section = $DB->get_record('course_sections', 'course', $this->instance->pageid, 'section', $section->section);
 
         if (!empty($section->id)) {

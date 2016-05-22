@@ -1,10 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nmoller
- * Date: 16-04-05
- * Time: 09:50
- */
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -13,35 +21,33 @@ global $CFG;
 require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
 require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
 
-require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
-require_once($CFG->dirroot.'/blocks/side_bar/block_side_bar.php');
+require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
+require_once($CFG->dirroot.'/blocks/ned_sidebar/block_ned_sidebar.php');
 
-class side_bar_after_restore_testcase extends advanced_testcase {
+class ned_sidebar_after_restore_testcase extends advanced_testcase {
 
     /**
-     *
-     *
      * @throws coding_exception
      */
     public function test_after_restore() {
         global $DB;
 
         $this->resetAfterTest(true);
-        // To be able to have global $USER
+        // To be able to have global $USER.
         $this->setAdminUser();
         $dg = $this->getDataGenerator();
-        // Create test course data
+        // Create test course data.
         $course = $dg->create_course(array('format' => 'topics', 'numsections' => 1));
         $section = $dg->create_course_section(array('course' => $course->id, 'section' => 1));
-        // Setup the course section for the Side Bar block-managed activities
-        $sectioninfo = block_side_bar_create_section($course);
+        // Setup the course section for the Side Bar block-managed activities.
+        $sectioninfo = block_ned_sidebar_create_section($course);
 
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => $sectioninfo->section));
 
-        // Setup the course section for the Side Bar block-managed activities
+        // Setup the course section for the Side Bar block-managed activities.
         $block = new stdClass();
         $ctx = context_course::instance($course->id);
-        $block->blockname = 'side_bar';
+        $block->blockname = 'ned_sidebar';
         $block->parentcontextid = $ctx->id;
         $block->patypepattern = 'course-view-*';
         $block->defaultregion = 'side-post';
@@ -53,26 +59,28 @@ class side_bar_after_restore_testcase extends advanced_testcase {
 
         $block->configdata = base64_encode(serialize($cfg));
 
-        $block_ins = $DB->insert_record('block_instances', $block);
+        $blockins = $DB->insert_record('block_instances', $block);
 
-        $new_course_id = $this->backup_and_restore($course);
+        $newcourseid = $this->backup_and_restore($course);
 
-        $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$new_course_id);
+        $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$newcourseid);
 
         $newsection = new stdClass();
-        $newsection->name          = get_string('sidebar', 'block_side_bar');
-        $newsection->summary       = get_string('sectionsummary', 'block_side_bar', (string)html_writer::link($reseturl, $reseturl));
+        $newsection->name          = get_string('sidebar', 'block_ned_sidebar');
+        $newsection->summary       = get_string('sectionsummary', 'block_ned_sidebar',
+            (string)html_writer::link($reseturl, $reseturl)
+        );
         $newsection->summaryformat = FORMAT_HTML;
         $newsection->visible       = true;
 
         $section = $DB->get_records('course_sections', array('name' => $newsection->name));
         $section = array_pop($section);
         $this->assertEquals($newsection->summary, $section->summary);
-        $block_instance = $DB->get_records('block_instances', array('blockname'=>'side_bar'));
-        $block_instance =array_pop($block_instance);
-        $new_config = $block_instance->configdata;
-        $new_config = unserialize(base64_decode($new_config));
-        $this->assertEquals($section->id, $new_config->section_id);
+        $blockinstance = $DB->get_records('block_instances', array('blockname' => 'ned_sidebar'));
+        $blockinstance = array_pop($blockinstance);
+        $newconfig = $blockinstance->configdata;
+        $newconfig = unserialize(base64_decode($newconfig));
+        $this->assertEquals($section->id, $newconfig->section_id);
 
     }
 

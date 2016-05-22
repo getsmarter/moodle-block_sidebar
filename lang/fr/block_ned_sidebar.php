@@ -17,7 +17,7 @@
 /**
  * Version details
  *
- * @package    block_side_bar
+ * @package    block_ned_sidebar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -32,3 +32,4 @@ $string['error_couldnotaddsection'] = 'Ajout de nouvelle section au cours imposs
 $string['pluginname'] = 'Bloc Latéral';
 $string['sectionnumberwarning'] = 'ATTENTION : Cette valeur doit être suffisamment élevée pour qu\'elle n\'interfère pas avec le nombre maximal de sections de cours. <br>De plus, si vous avez déjà un Bloc Latéral de configuré, assurez-vous de modifier cette valeur à quelque chose de plus grand que le numéro de la section maximale qui existe déjà. <br>En cas de doute, ne modifiez pas ce numéro.';
 $string['sidebar'] = 'Bloc Latéral';
+

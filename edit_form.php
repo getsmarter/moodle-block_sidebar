@@ -17,7 +17,7 @@
 /**
  * Instance configuration for the block allowing the title to be changed.
  *
- * @package    block_side_bar
+ * @package    block_ned_sidebar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -26,20 +26,30 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_side_bar_edit_form extends block_edit_form {
+class block_ned_sidebar_edit_form extends block_edit_form {
     protected function specific_definition($mform) {
         global $DB;
 
-        // Field for editing Side Bar block title
+        // Field for editing Side Bar block title.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
-        $mform->addElement('text', 'config_title', get_string('configtitle', 'block_side_bar'));
+        $mform->addElement('text', 'config_title', get_string('configtitle', 'block_ned_sidebar'));
         $mform->setType('config_title', PARAM_TEXT);
+
+        $mform->addElement('select', 'config_location_method', get_string('locationmethod', 'block_ned_sidebar'), array(
+            'number' => get_string('sectionnumber', 'block_ned_sidebar'),
+            'name' => get_string('sectionname', 'block_ned_sidebar')
+        ));
+        $mform->setType('config_location_method', PARAM_TEXT);
 
         $sql = "SELECT s.id, s.section FROM {course_sections} s WHERE s.course = ? ORDER BY s.section ASC";
         $configselect = $DB->get_records_sql_menu($sql, array($this->block->page->course->id));
 
-        $mform->addElement('select', 'config_section_id', get_string('configsection', 'block_side_bar'), $configselect);
+        $mform->addElement('select', 'config_section_id', get_string('configsection', 'block_ned_sidebar'), $configselect);
         $mform->setType('config_section_id', PARAM_INT);
+
+        $mform->addElement('text', 'config_section_name', get_string('sectionname', 'block_ned_sidebar'));
+        $mform->setType('config_section_name', PARAM_TEXT);
+
     }
 }
