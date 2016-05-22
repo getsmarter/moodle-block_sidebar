@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016042100;
+$plugin->version   = 2016052200;
 $plugin->requires  = 2014051200;
 $plugin->release   = '2.7.1';
 $plugin->component = 'block_ned_sidebar';
