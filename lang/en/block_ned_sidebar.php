@@ -33,7 +33,7 @@ $string['pluginname'] = 'NED Side bar';
 $string['sectionnumberwarning'] = 'WARNING: This value should be high enough that it will not interfere with regular course section values.  Also, if you already have Side bar blocks setup make sure you modify this value to something <i>larger</i> than the maximum section number already existing for a block.  If in doubt, don\'t change this number.';
 $string['ned_sidebar:addinstance'] = 'Add a new side bar block';
 $string['sidebar'] = 'Side bar';
-$string['sectionsummary'] = 'This section contains the activities added by the Side bar block. It is meant to be listed as Orphaned Activities when editing mode is enabled. If you see this section appear normally within your course (when editing mode is disabled), you should click on the following link {$a}.';
+$string['sectionsummary'] = 'The contents of this section will be mirrored in the Sidebar block. <a href="{$a}">Click here</a> if you ned more information about this block.';
 $string['configsection'] = 'Section';
 $string['locationmethod'] = 'Block location method';
 $string['sectionname'] = 'Section name';
