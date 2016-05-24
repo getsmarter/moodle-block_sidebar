@@ -19,8 +19,8 @@
  *
  * @package    block_ned_sidebar
  * @see        block_site_main_menu
- * @author     Justin Filip <jfilip@remote-learner.ca>
- * @copyright  2011 onwards Justin Filip
+ * @author     Fernando Oliveira <fernando.oliveira@knet.ca>
+ * @copyright  2016 onwards Fernando Oliveira
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
