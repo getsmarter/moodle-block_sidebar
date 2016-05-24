@@ -19,7 +19,7 @@ Feature: Section setting
       | assign     | Test assignment name   | Test assignment description   | C101     | assign1     | 0       |
       | book       | Test book name         | Test book description         | C101     | book1       | 1       |
       | chat       | Test chat name         | Test chat description         | C101     | chat1       | 4       |
-      | choice     | Test choice name       | Test choice description       | C110     | choice1     | 5       |
+      | choice     | Test choice name       | Test choice description       | C101     | choice1     | 5       |
     And I log in as "teacher1"
     And I follow "Course 1"
     And I turn editing mode on
