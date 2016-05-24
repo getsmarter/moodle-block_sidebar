@@ -82,7 +82,7 @@ class block_ned_sidebar extends block_list {
         $context   = context_course::instance($course->id);
         $isediting = $this->page->user_is_editing() && has_capability('moodle/course:manageactivities', $context);
 
-        if (!empty($locationmethod && !empty($sectionname))) {
+        if (!empty($locationmethod) && !empty($sectionname)) {
             if ($locationmethod == 'name') {
                 if ($section = $DB->get_record('course_sections',
                     array('course' => $course->id, 'name' => $sectionname))) {
@@ -326,7 +326,9 @@ class block_ned_sidebar extends block_list {
     public function after_restore() {
         global $DB;
         // Get the correct course_sections record ID for the new course.
-        $section = $DB->get_record('course_sections', 'course', $this->instance->pageid, 'section', $section->section);
+        $section = $DB->get_record('course_sections',
+            array('course' => $this->instance->pageid, 'section' => $this->config->section_id)
+        );
 
         if (!empty($section->id)) {
             $this->config->section_id = $section->id;
