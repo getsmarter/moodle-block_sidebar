@@ -24,7 +24,7 @@ require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
 require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
 require_once($CFG->dirroot.'/blocks/ned_sidebar/block_ned_sidebar.php');
 
-class ned_sidebar_after_restore_testcase extends advanced_testcase {
+class block_ned_sidebar_after_restore_testcase extends advanced_testcase {
 
     /**
      * @throws coding_exception
