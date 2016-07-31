@@ -1,7 +1,7 @@
 @block @block_ned_sidebar
 Feature: Section setting
   As a Admin
-  
+
   Scenario: Add a block
     Given the following "courses" exist:
       | fullname | shortname |
