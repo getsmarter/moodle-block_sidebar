@@ -21,10 +21,10 @@ global $CFG;
 require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
 require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
 
-require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
-require_once($CFG->dirroot.'/blocks/ned_sidebar/block_ned_sidebar.php');
+require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
+require_once($CFG->dirroot.'/blocks/side_bar/block_side_bar.php');
 
-class block_ned_sidebar_after_restore_testcase extends advanced_testcase {
+class block_side_bar_after_restore_testcase extends advanced_testcase {
 
     /**
      * @throws coding_exception
@@ -40,14 +40,14 @@ class block_ned_sidebar_after_restore_testcase extends advanced_testcase {
         $course = $dg->create_course(array('format' => 'topics', 'numsections' => 1));
         $section = $dg->create_course_section(array('course' => $course->id, 'section' => 1));
         // Setup the course section for the Side Bar block-managed activities.
-        $sectioninfo = block_ned_sidebar_create_section($course);
+        $sectioninfo = block_side_bar_create_section($course);
 
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => $sectioninfo->section));
 
         // Setup the course section for the Side Bar block-managed activities.
         $block = new stdClass();
         $ctx = context_course::instance($course->id);
-        $block->blockname = 'ned_sidebar';
+        $block->blockname = 'side_bar';
         $block->parentcontextid = $ctx->id;
         $block->patypepattern = 'course-view-*';
         $block->defaultregion = 'side-post';
@@ -63,11 +63,11 @@ class block_ned_sidebar_after_restore_testcase extends advanced_testcase {
 
         $newcourseid = $this->backup_and_restore($course);
 
-        $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$newcourseid);
+        $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$newcourseid);
 
         $newsection = new stdClass();
-        $newsection->name          = get_string('sidebar', 'block_ned_sidebar');
-        $newsection->summary       = get_string('sectionsummary', 'block_ned_sidebar',
+        $newsection->name          = get_string('sidebar', 'block_side_bar');
+        $newsection->summary       = get_string('sectionsummary', 'block_side_bar',
             (string)html_writer::link($reseturl, $reseturl)
         );
         $newsection->summaryformat = FORMAT_HTML;
@@ -76,7 +76,7 @@ class block_ned_sidebar_after_restore_testcase extends advanced_testcase {
         $section = $DB->get_records('course_sections', array('name' => $newsection->name));
         $section = array_pop($section);
         $this->assertEquals($newsection->summary, $section->summary);
-        $blockinstance = $DB->get_records('block_instances', array('blockname' => 'ned_sidebar'));
+        $blockinstance = $DB->get_records('block_instances', array('blockname' => 'side_bar'));
         $blockinstance = array_pop($blockinstance);
         $newconfig = $blockinstance->configdata;
         $newconfig = unserialize(base64_decode($newconfig));

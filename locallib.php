@@ -18,7 +18,7 @@
  * Allows for arbitrarily adding resources or activities to extra (non-standard) course sections with instance
  * configuration for the block title.
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2013 onwards Justin Filip
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param object $course The course DB record object
  * @return object|null An object representing the created section or null on error
  */
-function block_ned_sidebar_create_section($course) {
+function block_side_bar_create_section($course) {
     global $CFG, $DB;
 
     if (!is_object($course)) {
@@ -70,12 +70,12 @@ function block_ned_sidebar_create_section($course) {
     rebuild_course_cache($course->id);
 
     // Update the Side Bar section with the required values to make it work.
-    $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$course->id);
+    $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$course->id);
     $section = $DB->get_record('course_sections', array('course' => $course->id, 'section' => $sectionnum),
         'id, section, name, visible'
     );
-    $section->name          = get_string('sidebar', 'block_ned_sidebar');
-    $section->summary       = get_string('sectionsummary', 'block_ned_sidebar',
+    $section->name          = get_string('sidebar', 'block_side_bar');
+    $section->summary       = get_string('sectionsummary', 'block_side_bar',
         (string)html_writer::link($reseturl, $reseturl)
     );
     $section->summaryformat = FORMAT_HTML;
@@ -103,7 +103,7 @@ function block_ned_sidebar_create_section($course) {
  * @param int $sectionum The section number for the sidebar course section we are migrating
  * @return object|null An object representing the created section or null on error
  */
-function block_ned_sidebar_migrate_old_section($course, $sectionnum) {
+function block_side_bar_migrate_old_section($course, $sectionnum) {
     global $CFG, $DB;
 
     if (!is_object($course)) {
@@ -158,9 +158,9 @@ function block_ned_sidebar_migrate_old_section($course, $sectionnum) {
             }
 
             // If this is a sidebar section then we will skip over it.
-            $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$course->id);
-            $namematch    = get_string('sidebar', 'block_ned_sidebar') == $orphanedsection->name;
-            $summarymatch = get_string('sectionsummary', 'block_ned_sidebar',
+            $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$course->id);
+            $namematch    = get_string('sidebar', 'block_side_bar') == $orphanedsection->name;
+            $summarymatch = get_string('sectionsummary', 'block_side_bar',
                     (string)html_writer::link($reseturl, $reseturl)) == $orphanedsection->summary;
 
             if ($namematch && $summarymatch) {
@@ -220,7 +220,7 @@ function block_ned_sidebar_migrate_old_section($course, $sectionnum) {
  * @param int $sectionum The section number for the sidebar course section we are migrating
  * @return object|null An object representing the created section or null on error
  */
-function block_ned_sidebar_move_section($course, $sectionnum) {
+function block_side_bar_move_section($course, $sectionnum) {
     global $CFG, $DB;
 
     if (!is_object($course)) {
@@ -250,9 +250,9 @@ function block_ned_sidebar_move_section($course, $sectionnum) {
     }
 
     // If this is not a sidebar section then we return false.
-    $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$course->id);
-    $namematch    = get_string('sidebar', 'block_ned_sidebar') == $sbsection->name;
-    $summarymatch = get_string('sectionsummary', 'block_ned_sidebar',
+    $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$course->id);
+    $namematch    = get_string('sidebar', 'block_side_bar') == $sbsection->name;
+    $summarymatch = get_string('sectionsummary', 'block_side_bar',
             (string)html_writer::link($reseturl, $reseturl)) == $sbsection->summary;
 
     if (!$namematch || !$summarymatch) {

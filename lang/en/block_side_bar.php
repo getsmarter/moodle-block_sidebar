@@ -17,7 +17,7 @@
 /**
  * Version details
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -31,7 +31,7 @@ $string['configtitle'] = 'Enter new block title';
 $string['error_couldnotaddsection'] = 'Could not add new section to course';
 $string['pluginname'] = 'NED Side bar';
 $string['sectionnumberwarning'] = 'WARNING: This value should be high enough that it will not interfere with regular course section values.  Also, if you already have Side bar blocks setup make sure you modify this value to something <i>larger</i> than the maximum section number already existing for a block.  If in doubt, don\'t change this number.';
-$string['ned_sidebar:addinstance'] = 'Add a new side bar block';
+$string['side_bar:addinstance'] = 'Add a new side bar block';
 $string['sidebar'] = 'Side bar';
 $string['sectionsummary'] = 'The contents of this section will be mirrored in the Sidebar block. <a href="{$a}">Click here</a> if you ned more information about this block.';
 $string['configsection'] = 'Section';
@@ -39,3 +39,4 @@ $string['locationmethod'] = 'Block location method';
 $string['sectionname'] = 'Section name';
 $string['sectionnumber'] = 'Section number';
 $string['gotosection'] = 'Goto Section {$a}';
+$string['blockinfo'] = 'Block info';

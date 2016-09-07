@@ -17,7 +17,7 @@
 /**
  * Will reset the sidebar block course sections within the given course.
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2013 onwards Justin Filip
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -36,7 +36,7 @@ $context = context_course::instance($course->id);
 require_capability('moodle/course:manageactivities', $context);
 
 // Fetch all block instances which have saved configuration data.
-$select = "parentcontextid = :ctxid AND blockname = 'ned_sidebar' AND ".
+$select = "parentcontextid = :ctxid AND blockname = 'side_bar' AND ".
     $DB->sql_isnotempty('block_instances', 'configdata', true, true);
 if ($bis = $DB->get_recordset_select('block_instances', $select, array('ctxid' => $context->id), 'id, configdata')) {
     foreach ($bis as $bi) {
@@ -50,7 +50,7 @@ if ($bis = $DB->get_recordset_select('block_instances', $select, array('ctxid' =
             continue;
         }
 
-        $sectioninfo = block_ned_sidebar_move_section($course, (int)$section->section);
+        $sectioninfo = block_side_bar_move_section($course, (int)$section->section);
 
         if ($sectioninfo != null) {
             // Store the new section number and update the block configuration data.

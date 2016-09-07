@@ -18,7 +18,7 @@
  * Allows for arbitrarily adding resources or activities to extra (non-standard) course sections with instance
  * configuration for the block title.
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -27,12 +27,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class block_ned_sidebar extends block_list {
+class block_side_bar extends block_list {
     /**
      * Setup the title for this block
      */
     public function init() {
-        $this->title = get_string('pluginname', 'block_ned_sidebar');
+        $this->title = get_string('pluginname', 'block_side_bar');
     }
 
     /**
@@ -100,8 +100,8 @@ class block_ned_sidebar extends block_list {
 
         // Create a new section for this block (if necessary).
         if (empty($this->config->section_id)) {
-            require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
-            if (null == ($section = block_ned_sidebar_create_section($course))) {
+            require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
+            if (null == ($section = block_side_bar_create_section($course))) {
                 return $this->content;
             }
 
@@ -112,8 +112,8 @@ class block_ned_sidebar extends block_list {
 
             $section = $DB->get_record('course_sections', array('id' => $this->config->section_id));
             if (empty($section)) {
-                require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
-                if (null == ($section = block_ned_sidebar_create_section($course))) {
+                require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
+                if (null == ($section = block_side_bar_create_section($course))) {
                     return $this->content;
                 }
 
@@ -254,7 +254,7 @@ class block_ned_sidebar extends block_list {
         $this->content->icons[] = '';
 
         $this->content->items[] = '<div class="section-quick-link"><a class="btn" href="'.
-            $sectionurl->out().'">'.get_string('gotosection', 'block_ned_sidebar', $section->section).'</a></div>';
+            $sectionurl->out().'">'.get_string('gotosection', 'block_side_bar', $section->section).'</a></div>';
         $this->content->icons[] = '';
 
         $this->content->footer = $courserenderer->course_section_add_cm_control($course, $section->section,

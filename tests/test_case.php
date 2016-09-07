@@ -18,7 +18,7 @@
  * Allows for arbitrarily adding resources or activities to extra (non-standard) course sections with instance
  * configuration for the block title.
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2013 onwards Justin Filip
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,10 +27,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot.'/blocks/ned_sidebar/locallib.php');
+require_once($CFG->dirroot.'/blocks/side_bar/locallib.php');
 
 /**
- * @group block_ned_sidebar
+ * @group block_side_bar
  */
 class blockSideBarTestcase extends advanced_testcase {
     /** @var phpunit_data_generator A reference to the data generator object for creating test data */
@@ -55,9 +55,9 @@ class blockSideBarTestcase extends advanced_testcase {
     private function validate_sidebar_course_section($section, $sectionnum, $courseid) {
         global $CFG;
 
-        $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$courseid);
-        $this->assertEquals(get_string('sidebar', 'block_ned_sidebar'), $section->name);
-        $this->assertEquals(get_string('sectionsummary', 'block_ned_sidebar',
+        $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$courseid);
+        $this->assertEquals(get_string('sidebar', 'block_side_bar'), $section->name);
+        $this->assertEquals(get_string('sectionsummary', 'block_side_bar',
             (string)html_writer::link($reseturl, $reseturl)), $section->summary);
         $this->assertEquals($sectionnum, $section->section);
         $this->assertEquals(1, $section->visible);
@@ -75,13 +75,13 @@ class blockSideBarTestcase extends advanced_testcase {
         $dg = $this->getDataGenerator();
         $dg->create_course_section(array('course' => $courseid, 'section' => $sectionnum));
 
-        $reseturl = new moodle_url('/blocks/ned_sidebar/reset.php?cid='.$courseid);
+        $reseturl = new moodle_url('/blocks/side_bar/reset.php?cid='.$courseid);
 
         $section = $DB->get_record('course_sections', array('course' => $courseid, 'section' => $sectionnum),
             'id, section, name, visible'
         );
-        $section->name          = get_string('sidebar', 'block_ned_sidebar');
-        $section->summary       = get_string('sectionsummary', 'block_ned_sidebar',
+        $section->name          = get_string('sidebar', 'block_side_bar');
+        $section->summary       = get_string('sectionsummary', 'block_side_bar',
             (string)html_writer::link($reseturl, $reseturl)
         );
         $section->summaryformat = FORMAT_HTML;
@@ -97,7 +97,7 @@ class blockSideBarTestcase extends advanced_testcase {
      */
     public function test_create_section_invalid_course_parameter_throws_exception_null() {
         $this->resetAfterTest();
-        block_ned_sidebar_create_section(null);
+        block_side_bar_create_section(null);
     }
 
     /**
@@ -107,7 +107,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_create_section_invalid_course_parameter_throws_exception_int() {
-        block_ned_sidebar_create_section(1);
+        block_side_bar_create_section(1);
     }
 
     /**
@@ -117,7 +117,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_create_section_invalid_course_parameter_throws_exception_string() {
-        block_ned_sidebar_create_section('string');
+        block_side_bar_create_section('string');
     }
 
     /**
@@ -127,7 +127,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_create_section_invalid_course_parameter_throws_exception_array() {
-        block_ned_sidebar_create_section(array(1, 2, 3));
+        block_side_bar_create_section(array(1, 2, 3));
     }
 
     /**
@@ -146,7 +146,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page = $dg->create_module('page', array('course' => $course->id, 'section' => 1));
 
         // Setup the containing course section.
-        $sectioninfo = block_ned_sidebar_create_section($course);
+        $sectioninfo = block_side_bar_create_section($course);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -184,7 +184,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $section = $dg->create_course_section(array('course' => $course->id, 'section' => 3));
 
         // Setup the course section for the Side Bar block-managed activities.
-        $sectioninfo = block_ned_sidebar_create_section($course);
+        $sectioninfo = block_side_bar_create_section($course);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -221,7 +221,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => 2));
 
         // Setup the course section for the Side Bar block-managed activities.
-        $sectioninfo = block_ned_sidebar_create_section($course);
+        $sectioninfo = block_side_bar_create_section($course);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -258,7 +258,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $section = $dg->create_course_section(array('course' => $course->id, 'section' => 4));
 
         // Setup the course section for the Side Bar block-managed activities.
-        $sectioninfo = block_ned_sidebar_create_section($course);
+        $sectioninfo = block_side_bar_create_section($course);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -295,7 +295,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => 4));
 
         // Setup the course section for the Side Bar block-managed activities.
-        $sectioninfo = block_ned_sidebar_create_section($course);
+        $sectioninfo = block_side_bar_create_section($course);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -316,7 +316,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_migrate_old_section_invalid_course_parameter_throws_exception_null() {
-        block_ned_sidebar_migrate_old_section(null, 1);
+        block_side_bar_migrate_old_section(null, 1);
     }
 
     /**
@@ -326,7 +326,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_migrate_old_section_invalid_course_parameter_throws_exception_int() {
-        block_ned_sidebar_migrate_old_section(1, 1);
+        block_side_bar_migrate_old_section(1, 1);
     }
 
     /**
@@ -336,7 +336,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_migrate_old_section_invalid_course_parameter_throws_exception_string() {
-        block_ned_sidebar_migrate_old_section('string', 1);
+        block_side_bar_migrate_old_section('string', 1);
     }
 
     /**
@@ -346,7 +346,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_migrate_old_section_invalid_course_parameter_throws_exception_array() {
-        block_ned_sidebar_migrate_old_section(array(1, 2, 3), 1);
+        block_side_bar_migrate_old_section(array(1, 2, 3), 1);
     }
 
     /**
@@ -356,7 +356,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_migrate_old_section_invalid_section_parameter_throws_exception_null() {
-        block_ned_sidebar_migrate_old_section(new stdClass(), null);
+        block_side_bar_migrate_old_section(new stdClass(), null);
     }
 
     /**
@@ -366,7 +366,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_migrate_old_section_invalid_section_parameter_throws_exception_int_zero() {
-        block_ned_sidebar_migrate_old_section(new stdClass(), 0);
+        block_side_bar_migrate_old_section(new stdClass(), 0);
     }
 
     /**
@@ -376,7 +376,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_migrate_old_section_invalid_section_parameter_throws_exception_int_negative() {
-        block_ned_sidebar_migrate_old_section(new stdClass(), -1);
+        block_side_bar_migrate_old_section(new stdClass(), -1);
     }
 
     /**
@@ -386,7 +386,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_migrate_old_section_invalid_section_parameter_throws_exception_string() {
-        block_ned_sidebar_migrate_old_section(new stdClass(), 'string');
+        block_side_bar_migrate_old_section(new stdClass(), 'string');
     }
 
     /**
@@ -396,7 +396,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_migrate_old_section_invalid_section_parameter_throws_exception_array() {
-        block_ned_sidebar_migrate_old_section(new stdClass(), array(1, 2, 3));
+        block_side_bar_migrate_old_section(new stdClass(), array(1, 2, 3));
     }
 
     /**
@@ -413,7 +413,7 @@ class blockSideBarTestcase extends advanced_testcase {
         }
 
         $course = $dg->create_course(array('format' => 'topics', 'numsections' => 1));
-        $this->assertNull(block_ned_sidebar_migrate_old_section($course, 1000));
+        $this->assertNull(block_side_bar_migrate_old_section($course, 1000));
     }
 
     /**
@@ -437,7 +437,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->create_sidebar_course_section($course->id, 1000);
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1000);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1000);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -479,7 +479,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->create_sidebar_course_section($course->id, 1000);
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1000);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1000);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -529,7 +529,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => 1000));
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1000);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1000);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -568,7 +568,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->create_sidebar_course_section($course->id, 11);
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 11);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 11);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -605,7 +605,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => 11));
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 11);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 11);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -649,7 +649,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page2 = $dg->create_module('page', array('course' => $course->id), array('section' => 1001));
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1000);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1000);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -666,7 +666,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->assertNotEquals(false, get_coursemodule_from_instance('page', $page1->id, $course->id, 11));
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1001);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1001);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -710,7 +710,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page2 = $dg->create_module('page', array('course' => $course->id), array('section' => 1001));
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1001);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1001);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -728,7 +728,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->assertNotEquals(false, get_coursemodule_from_instance('page', $page1->id, $course->id, 11));
 
         // Run the migration method.
-        $sectioninfo = block_ned_sidebar_migrate_old_section($course, 1000);
+        $sectioninfo = block_side_bar_migrate_old_section($course, 1000);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -753,7 +753,7 @@ class blockSideBarTestcase extends advanced_testcase {
      */
     public function test_move_section_invalid_course_parameter_throws_exception_null() {
         $this->resetAfterTest();
-        block_ned_sidebar_move_section(null, 1);
+        block_side_bar_move_section(null, 1);
     }
 
     /**
@@ -763,7 +763,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_move_section_invalid_course_parameter_throws_exception_int() {
-        block_ned_sidebar_move_section(1, 1);
+        block_side_bar_move_section(1, 1);
     }
 
     /**
@@ -773,7 +773,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_move_section_invalid_course_parameter_throws_exception_string() {
-        block_ned_sidebar_move_section('string', 1);
+        block_side_bar_move_section('string', 1);
     }
 
     /**
@@ -783,7 +783,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $course must be an object
      */
     public function test_move_section_invalid_course_parameter_throws_exception_array() {
-        block_ned_sidebar_move_section(array(1, 2, 3), 1);
+        block_side_bar_move_section(array(1, 2, 3), 1);
     }
 
     /**
@@ -793,7 +793,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_move_section_invalid_section_parameter_throws_exception_null() {
-        block_ned_sidebar_move_section(new stdClass(), null);
+        block_side_bar_move_section(new stdClass(), null);
     }
 
     /**
@@ -803,7 +803,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_move_section_invalid_section_parameter_throws_exception_int_zero() {
-        block_ned_sidebar_move_section(new stdClass(), 0);
+        block_side_bar_move_section(new stdClass(), 0);
     }
 
     /**
@@ -813,7 +813,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_move_section_invalid_section_parameter_throws_exception_int_negative() {
-        block_ned_sidebar_move_section(new stdClass(), -1);
+        block_side_bar_move_section(new stdClass(), -1);
     }
 
     /**
@@ -823,7 +823,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_move_section_invalid_section_parameter_throws_exception_string() {
-        block_ned_sidebar_move_section(new stdClass(), 'string');
+        block_side_bar_move_section(new stdClass(), 'string');
     }
 
     /**
@@ -833,7 +833,7 @@ class blockSideBarTestcase extends advanced_testcase {
      * @expectedExceptionMessage $sectionnum must be a positive integer
      */
     public function test_move_section_invalid_section_parameter_throws_exception_array() {
-        block_ned_sidebar_move_section(new stdClass(), array(1, 2, 3));
+        block_side_bar_move_section(new stdClass(), array(1, 2, 3));
     }
 
     /**
@@ -850,7 +850,7 @@ class blockSideBarTestcase extends advanced_testcase {
         }
 
         $course = $dg->create_course(array('format' => 'topics', 'numsections' => 1));
-        $this->assertNull(block_ned_sidebar_move_section($course, 1000));
+        $this->assertNull(block_side_bar_move_section($course, 1000));
     }
 
     /**
@@ -871,7 +871,7 @@ class blockSideBarTestcase extends advanced_testcase {
         }
 
         // Attempt to "move" the section to be not visible.
-        $this->assertNull(block_ned_sidebar_move_section($course, 10));
+        $this->assertNull(block_side_bar_move_section($course, 10));
     }
 
     /**
@@ -895,7 +895,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->create_sidebar_course_section($course->id, 11);
 
         // Attempt to "move" the section to be not visible.
-        $this->assertNull(block_ned_sidebar_move_section($course, 11));
+        $this->assertNull(block_side_bar_move_section($course, 11));
     }
 
     /**
@@ -920,7 +920,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->create_sidebar_course_section($course->id, 10);
 
         // Attempt to "move" the section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 10);
+        $sectioninfo = block_side_bar_move_section($course, 10);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -960,7 +960,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $dg->create_course_section(array('course' => $course->id, 'section' => 10));
 
         // Attempt to "move" the section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 9);
+        $sectioninfo = block_side_bar_move_section($course, 9);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -999,7 +999,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->create_sidebar_course_section($course->id, 10);
 
         // Attempt to "move" the first section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 9);
+        $sectioninfo = block_side_bar_move_section($course, 9);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1014,7 +1014,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->validate_sidebar_course_section($sbsection, 11, $course->id);
 
         // Attempt to "move" the second section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 10);
+        $sectioninfo = block_side_bar_move_section($course, 10);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1054,7 +1054,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $dg->create_course_section(array('course' => $course->id, 'section' => 12));
 
         // Attempt to "move" the section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 10);
+        $sectioninfo = block_side_bar_move_section($course, 10);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1092,7 +1092,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page = $dg->create_module('page', array('course' => $course->id), array('section' => 10));
 
         // Attempt to "move" the section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 10);
+        $sectioninfo = block_side_bar_move_section($course, 10);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1136,7 +1136,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $dg->create_course_section(array('course' => $course->id, 'section' => 10));
 
         // Attempt to "move" the section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 9);
+        $sectioninfo = block_side_bar_move_section($course, 9);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1181,7 +1181,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page2 = $dg->create_module('page', array('course' => $course->id), array('section' => 10));
 
         // Attempt to "move" the first section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 9);
+        $sectioninfo = block_side_bar_move_section($course, 9);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1199,7 +1199,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $this->assertNotEquals(false, get_coursemodule_from_instance('page', $page1->id, $course->id, 11));
 
         // Attempt to "move" the second section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 10);
+        $sectioninfo = block_side_bar_move_section($course, 10);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));
@@ -1246,7 +1246,7 @@ class blockSideBarTestcase extends advanced_testcase {
         $page3 = $dg->create_module('page', array('course' => $course->id), array('section' => 12));
 
         // Attempt to "move" the section to be not visible.
-        $sectioninfo = block_ned_sidebar_move_section($course, 10);
+        $sectioninfo = block_side_bar_move_section($course, 10);
 
         // Ensure returned data is what we expect.
         $this->assertTrue(is_object($sectioninfo));

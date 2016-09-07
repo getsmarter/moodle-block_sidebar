@@ -17,7 +17,7 @@
 /**
  * Version details
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @see        block_site_main_menu
  * @author     Fernando Oliveira <fernando.oliveira@knet.ca>
  * @copyright  2016 onwards Fernando Oliveira
@@ -26,8 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016052300;
+$plugin->version   = 2016090600;
 $plugin->requires  = 2014051200;
 $plugin->release   = '2.7.1';
-$plugin->component = 'block_ned_sidebar';
+$plugin->component = 'block_side_bar';
 $plugin->maturity  = MATURITY_STABLE;

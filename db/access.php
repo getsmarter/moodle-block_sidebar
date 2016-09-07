@@ -17,7 +17,7 @@
 /**
  * Side Bar block capabilities.
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'block/ned_sidebar:addinstance' => array(
+    'block/side_bar:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
 
         'captype' => 'write',

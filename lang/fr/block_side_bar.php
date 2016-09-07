@@ -17,7 +17,7 @@
 /**
  * Version details
  *
- * @package    block_ned_sidebar
+ * @package    block_side_bar
  * @see        block_site_main_menu
  * @author     Justin Filip <jfilip@remote-learner.ca>
  * @copyright  2011 onwards Justin Filip

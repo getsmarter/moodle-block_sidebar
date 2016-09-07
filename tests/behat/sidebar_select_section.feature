@@ -1,4 +1,4 @@
-@block @block_ned_sidebar
+@block @block_side_bar
 Feature: Section setting
   As a Admin
 
@@ -8,7 +8,7 @@ Feature: Section setting
       | Course 1 | C1        |
     And the following "blocks" exist:
       | blockname    | contextlevel | reference | pagetypepattern | defaultregion |
-      | ned_sidebar | Course       | C1        | course-view-*   | site-pre      |
+      | side_bar | Course       | C1        | course-view-*   | site-pre      |
     When I log in as "admin"
     And I am on site homepage
     And I follow "Course 1"
