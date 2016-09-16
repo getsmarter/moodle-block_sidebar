@@ -33,6 +33,9 @@ class block_side_bar_edit_form extends block_edit_form {
         // Field for editing Side Bar block title.
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
 
+        $mform->addElement('static', 'blockinfo', get_string('blockinfo', 'block_side_bar'),
+            '<a target="_blank" href="http://ned.ca/sidebar">http://ned.ca/sidebar</a>');
+
         $mform->addElement('text', 'config_title', get_string('configtitle', 'block_side_bar'));
         $mform->setType('config_title', PARAM_TEXT);
 
@@ -50,9 +53,5 @@ class block_side_bar_edit_form extends block_edit_form {
 
         $mform->addElement('text', 'config_section_name', get_string('sectionname', 'block_side_bar'));
         $mform->setType('config_section_name', PARAM_TEXT);
-
-        $mform->addElement('static', 'blockinfo', get_string('blockinfo', 'block_side_bar'),
-            '<a target="_blank" href="http://ned.ca/sidebar">http://ned.ca/sidebar</a>');
-
     }
 }
