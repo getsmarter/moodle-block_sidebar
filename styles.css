@@ -6,3 +6,14 @@
 .block_side_bar .footer { margin-top: 1em; }
 .block_side_bar .section_add_menus noscript div { display: inline; }
 .block_side_bar .section-quick-link { text-align: right; margin-right: 5px; }
+
+/* Temp fix until converted to plugin */
+#page-blocks-side_bar-course #region-main .card-block {
+    display: inline;
+    padding: 0;
+    border: none;
+}
+
+#page-blocks-side_bar-course [data-region="blocks-column"] {
+    width: 100% !important;
+}

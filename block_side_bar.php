@@ -313,7 +313,8 @@ class block_side_bar extends block_list {
     public function applicable_formats() {
         return array(
             'site-index'  => true,
-            'course-view' => true
+            'course-view' => true,
+            'blocks-ned_sidebar-course' => true
         );
     }
 
