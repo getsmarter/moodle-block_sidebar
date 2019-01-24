@@ -314,7 +314,7 @@ class block_side_bar extends block_list {
         return array(
             'site-index'  => true,
             'course-view' => true,
-            'blocks-ned_sidebar-course' => true
+            'blocks-side_bar' => true
         );
     }
 
