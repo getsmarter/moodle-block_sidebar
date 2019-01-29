@@ -31,12 +31,22 @@
     border: 1px solid #2f2f2f; 
     border-radius: 50%;
     padding-right:0px!important;
+    background: #fff;
+    display: inline-flex;
 }
 
 .block_side_bar .card-block .card-text .column.c1 a {
     text-transform: capitalize;
+    border-bottom: 1px dashed #bbb !important;
+    
 }
 
 .block-region .block_side_bar .card-block .card-text .column.c1 {
     padding:0.5em;
+}
+
+@media only screen and (max-width: 320px){
+    .block_side_bar .card-block {
+        padding: 1rem !important;
+    }
 }
