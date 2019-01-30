@@ -145,7 +145,7 @@ class block_side_bar extends block_list {
                         // Accessibility: incidental image - should be empty Alt text.
                         //moving elements around and wrapping icon in its own span so I can manipulate it better
                         $icon = '<span><img src="'.$cm->get_icon_url().'" class="icon" alt="" /></span>';
-                        $this->content->items[] = $icon . '&nbsp;&nbsp;<a title="'.$cm->modplural.'" '.$linkcss.' '.$cm->extra.' href="'.
+                        $this->content->items[] = $icon . '<a title="'.$cm->modplural.'" '.$linkcss.' '.$cm->extra.' href="'.
                                 $url.'">'.$instancename.'</a>';
                     }
                 }
