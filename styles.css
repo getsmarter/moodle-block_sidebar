@@ -38,8 +38,11 @@
 
 .block_side_bar .card-block .card-text .column.c1 a {
     text-transform: capitalize;
-    border-bottom: 1px dashed #bbb !important;
-    
+    border-bottom: 1px dashed #bbb !important;   
+}
+
+.block_side_bar .card-block .card-text .column.c1 a:hover {
+    border-bottom: 1px solid #bbb !important;   
 }
 
 .block-region .block_side_bar .card-block .card-text .column.c1 {
