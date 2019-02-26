@@ -6,3 +6,52 @@
 .block_side_bar .footer { margin-top: 1em; }
 .block_side_bar .section_add_menus noscript div { display: inline; }
 .block_side_bar .section-quick-link { text-align: right; margin-right: 5px; }
+
+/* Temp fix until converted to plugin */
+#page-blocks-side_bar-course #region-main .card-block {
+    display: inline;
+    padding: 0;
+    border: none;
+}
+
+#page-blocks-side_bar-course [data-region="blocks-column"] {
+    width: 100% !important;
+}
+
+ .block_side_bar .card-block .card-title { /*hard override, use of important*/
+    font-size: 36px!important;
+    text-align: left;
+}
+
+.block_side_bar .card-block .card-text .column.c1 img.icon  {
+    width: 48px; 
+    height: 48px;
+    min-width: 48px; 
+    vertical-align: middle;
+    border: 1px solid #2f2f2f; 
+    border-radius: 50%;
+    padding-right:0px!important;
+    background: #fff;
+    display: inline-flex;
+    margin-right: 15px;
+}
+
+.block_side_bar .card-block .card-text .column.c1 a {
+    text-transform: capitalize;
+    border-bottom: 1px dashed #bbb !important;   
+}
+
+.block_side_bar .card-block .card-text .column.c1 a:hover {
+    border-bottom: 1px solid #bbb !important;   
+}
+
+.block-region .block_side_bar .card-block .card-text .column.c1 {
+    padding:0.5em;
+}
+
+@media only screen and (max-width: 320px){
+    .block_side_bar .card-block {
+        padding: 1rem !important;
+    }
+}
+
