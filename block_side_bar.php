@@ -143,9 +143,10 @@ class block_side_bar extends block_list {
                     } else {
                         $linkcss = $cm->visible ? '' : ' class="dimmed" ';
                         // Accessibility: incidental image - should be empty Alt text.
-                        $icon = '<img src="'.$cm->get_icon_url().'" class="icon" alt="" />&nbsp;';
-                        $this->content->items[] = '<a title="'.$cm->modplural.'" '.$linkcss.' '.$cm->extra.' href="'.
-                                $url.'">'.$icon.$instancename.'</a>';
+                        //moving elements around and wrapping icon in its own span so I can manipulate it better
+                        $icon = '<span><img src="'.$cm->get_icon_url().'" class="icon" alt="" /></span>';
+                        $this->content->items[] = $icon . '<a title="'.$cm->modplural.'" '.$linkcss.' '.$cm->extra.' href="'.
+                                $url.'">'.$instancename.'</a>';
                     }
                 }
             }
@@ -313,7 +314,8 @@ class block_side_bar extends block_list {
     public function applicable_formats() {
         return array(
             'site-index'  => true,
-            'course-view' => true
+            'course-view' => true,
+            'blocks-side_bar' => true
         );
     }
 
