@@ -40,4 +40,3 @@ $string['sectionname'] = 'Section name';
 $string['sectionnumber'] = 'Section number';
 $string['gotosection'] = 'Goto Section {$a}';
 $string['blockinfo'] = 'Block info';
-$string['pagetitle'] = ': Course announcements and resources';
