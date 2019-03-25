@@ -42,7 +42,7 @@
 }
 
 .block_side_bar .card-block .card-text .column.c1 a:hover {
-    border-bottom: 1px solid #bbb !important;   
+    border-bottom: 1px solid [[setting:themehovercolor]] !important;   
 }
 
 .block-region .block_side_bar .card-block .card-text .column.c1 {
