@@ -94,7 +94,7 @@ class restore_side_bar_block_task extends restore_block_task {
                         (string)html_writer::link($reseturl, $reseturl)
                     );
                     $newsection->summaryformat = FORMAT_HTML;
-                    $newsection->visible       = true;
+                    $newsection->visible       = false;
                     $DB->update_record('course_sections', $newsection);
 
                 }
