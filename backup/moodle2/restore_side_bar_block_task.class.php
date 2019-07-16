@@ -68,7 +68,6 @@ class restore_side_bar_block_task extends restore_block_task {
      */
     public function after_restore() {
         global $DB;
-
         // Get the blockid.
         $blockid = $this->get_blockid();
 
@@ -78,7 +77,6 @@ class restore_side_bar_block_task extends restore_block_task {
                 // Get the mapping and replace it in config.
                 if ($mapping = restore_dbops::get_backup_ids_record($this->get_restoreid(),
                     'course_section', $config->section_id)) {
-
                     // Update the parent module id (the id from mdl_quiz etc...)
                     $config->section_id = $mapping->newitemid;
 
